@@ -1,6 +1,30 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
+
+#define INPUTSIZE 1024
+
+int main() {
+
+//    FILE *fp = fopen("input.txt", "r");
+//    if (fp == NULL) {
+//        printf("input.txt is null");
+//        return 1;
+//    }
+//
+//    // Read the contents of the file into a character array
+//    char text[INPUTSIZE];
+//    size_t n = fread(text, 1, INPUTSIZE, fp);
+//    if (n == 0) {
+//        printf("input.txt is empty");
+//        return 1;
+//    }
+//
+//    // Do something with the contents of the file
+//    printf(text);
+//
+//    // Close the file
+//    fclose(fp);
+//    return 0;
+}
 
 
 
