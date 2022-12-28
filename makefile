@@ -1,25 +1,28 @@
-# AR=ar
-# CC=gcc
-# FLAGS= -Wall -g
+AR=ar
+CC=gcc
+FLAGS= -Wall -g
 
-# all:	connections lib.a
+all:	txtfind isort libSort.a libFind.a
 
-# #lib.so:	my_mat.o
-# #	$(CC) -shared -o lib.so my_mat.o
+isort:	isort.o libSort.a
+	$(CC) $(FLAGS) -o isort isort.o lib.a -lm
 
-# connections:	main.o lib.a
-# 	$(CC) $(FLAGS) -o connections main.o lib.a -lm
+txtfind:	txtfind.o libFind.a
+	$(CC) $(FLAGS) -o txtfind txtfind.o lib.a -lm
 
-# lib.a:	my_mat.o
-# 	$(AR) -rcs lib.a my_mat.o
+libSort.a:	isort.o
+	$(AR) -rcs lib.a isort.o
 
-# main.o:	main.c my_mat.h
-# 	$(CC) $(FLAGS) -c main.c
+libFind.a:	txtfind.o
+	$(AR) -rcs lib.a txtfind.o
 
-# my_mat.o:	my_mat.c my_mat.h
-# 	$(CC) $(FLAGS) -c my_mat.c
+isort.o:	isort.c main.h
+	$(CC) $(FLAGS) -c isort.c
 
-# .PHONY: clean all
+txtfind.o:	txtfind.c main.h
+	$(CC) $(FLAGS) -c txtfind.c
 
-# clean:
-# 	rm -f *.o connections *.a
+.PHONY: clean all
+
+clean:
+	rm -f *.o *.a isort txtfind
