@@ -4,7 +4,7 @@ int insertion_sort(int* arr , int len);
 
 int getLine(char s[]);
 
-int getword(char w[]);
+int getWord(char w[]);
 
 int substring( char * str1, char * str2);
 

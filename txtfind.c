@@ -1,46 +1,83 @@
 #include <stdio.h>
 #include <ctype.h>
 
-#define line 256
+#define line 256  // maximum length of a line
 #define word 30
 #define numOfLine 250
 
-int getLine(char s[])
-{
-    int info;
-    int countWords = 0;
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-    while (scanf("%lc", &info) == 1)
-    {
-        s[countWords] = info;
-        countWords++;
-        printf("%lc", info);
-        // array[index] = info;
-        // index++;
+int getLine(char s[]) {
+    int i, c;
+
+    // Read characters from the standard input until a new line is reached
+    for (i = 0; i < line - 1 && c != '\n'; i++) {
+        c = getchar(i);
+        s[i] = c;
     }
-    return 0;
+
+    // Add a null character to mark the end of the string
+    s[i] = '\0';
+
+    // Return the number of characters read
+    return i;
 }
 
-int getword(char w[])
-{
-    int info;
-    int countWords = 0;
+int getWord(char w[]) {
+    int i, c;
 
-    while (scanf("%lc", &info) == 1)
-    {
-        if (info == '\n' || info == '\r' || info == ' ' || info == '\t')
-        {
-            return countWords;
-        }
-        w[countWords] = info;
-        countWords++;
+    // Read characters from the standard input until a new word is reached
+    for (i = 0; i < word - 1 && c != ' '; i++) {
+        c = getchar(i);
+        w[i] = c;
     }
-    return countWords;
+
+    // Add a null character to mark the end of the string
+    w[i] = '\0';
+
+    // Return the number of characters read
+    return i;
 }
+
+
+//int getLine(char s[])
+//{
+//    int info;
+//    int countWords = 0;
+//
+//    while (scanf("%lc", &info) == 1)
+//    {
+//        s[countWords] = info;
+//        countWords++;
+//        printf("%lc", info);
+//        // array[index] = info;
+//        // index++;
+//    }
+//    return 0;
+//}
+
+//int getWord(char w[])
+//{
+//    int info;
+//    int countWords = 0;
+//
+//    while (scanf("%lc", &info) == 1)
+//    {
+//        if (info == '\n' || info == '\r' || info == ' ' || info == '\t')
+//        {
+//            return countWords;
+//        }
+//        w[countWords] = info;
+//        countWords++;
+//    }
+//    return countWords;
+//}
 
 int substring(char *str1, char *str2)
 {
-    return 0;
+    return strstr(str1, str2) != NULL;
 }
 
 int similar(char *s, char *t, int n)
