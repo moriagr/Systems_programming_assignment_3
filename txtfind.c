@@ -94,43 +94,62 @@ int similar(char *s, char *t, int n) {
     return strncmp(s, t, n);
 }
 
-void print_lines() {
+void print_lines(int line, char text[INPUTSIZE][LINE], char *to_find) {
 
-    FILE *fp = fopen("find_inputa.txt", "r");
-    if (fp == NULL) {
-        printf("input file is null");
-    }
-
-    char text[INPUTSIZE][LINE];
-
-    int line = 0;
-    while (!feof(fp) && !ferror(fp)) {
-        if (fgets(text[line], LINE, fp) != NULL) {
-            line++;
+    for (int i = 1; i < line; i++) {
+        if (substring(text[i], to_find) == 0) {
+            printf("%s", text[i]);
         }
     }
-
-    // Close the file
-    fclose(fp);
-
-    //print the lines containing the specified string
-    char to_find[WORD];
-    char clause[WORD];
-    sscanf(text[0], "%[^ ];%s", to_find, clause);
-    printf("%s", clause);
-
-    if (strcmp(clause, "a")) {
-        for (int i = 1; i < line; i++) {
-            if (substring(text[i], to_find) == 0) {
-                printf("%s", text[i]);
-            }
-        }
-    }
-
 }
 
-void print_similar_words() {
+void print_similar_words(int line, char text[INPUTSIZE][LINE], char *to_find) {
 
+    char store[INPUTSIZE][WORD];
+
+    // Iterate over the lines in the text array
+    int index = 0;
+    for (int i = 1; i < INPUTSIZE; i++) {
+        // Tokenize the current line
+        char *token = strtok(text[i], " ");
+
+        // Iterate over the words in the current line
+        while (token != NULL) {
+            // Check if the token is similar to the string to find up to one character difference
+            if (strncmp(token, to_find, 1) == 0) {
+                strcpy(store[index], token);
+                index++;
+            }
+
+            // Get the next word in the current line
+            token = strtok(NULL, " ");
+        }
+    }
+
+    for(int i = 0; i< index; i++){
+        printf("%s" , store[i]);
+    }
+
+//    char *token;
+//    for (int i = 2; i < line; i++) {
+//        token = strtok(text[i], " ");
+//        while (token != NULL) {
+//
+//            // Check if the token is similar to the string to find up to one character difference
+//            if (strncmp(token, to_find, 1) == 0) {
+//                printf("%s", token);
+//            }
+//
+//
+//            // Get the next token
+//            token = strtok(NULL, " ");
+//        }
+//    }
+}
+
+int main() {
+
+    //read the input file
     FILE *fp = fopen("find_inputb.txt", "r");
     if (fp == NULL) {
         printf("input file is null");
@@ -148,32 +167,21 @@ void print_similar_words() {
     // Close the file
     fclose(fp);
 
-    //print the lines containing the specified string
     char to_find[WORD];
     char clause[WORD];
-    sscanf(text[0], "%[^ ];%s", to_find, clause);
-    printf("%s", clause);
 
-    //check problems
-    char *token;
-    if (strcmp(clause, "b")) {
-        for (int i = 2; i < line; i++) {
-            token = strtok(text[i], " ");
-            while (token != NULL) {
-                if (similar(token, to_find, 1) == 0) {
-                    printf("%s", token);
-                }
-                token = strtok(NULL, " ");
-            }
-        }
+    sscanf(text[0], "%s %s", to_find, clause);
+
+    //print the lines containing the specified string
+    if (strcmp(clause, "a") == 0) {
+        print_lines(line, text, to_find);
     }
-}
 
-int main() {
-
-    print_lines();
-    print_similar_words();
-
+    //print the words similar to the specified string
+    if (strcmp(clause, "b") == 0) {
+        print_similar_words(line, text, to_find);
+    }
+    printf("\n%s", "finished\n");
 
     return 0;
 
