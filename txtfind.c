@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <ctype.h>
+#include <string.h>
 
-#define line 256  // maximum length of a line
-#define word 30
+#define LINE 256  // maximum length of a line
+#define WORD 30
 #define numOfLine 250
 #define INPUTSIZE 1024
 
@@ -12,13 +13,12 @@
 #include <string.h>
 
 
-
 int getLine(char s[]) {
     int i, c;
 
     // Read characters from the standard input until a new line is reached
     c = getchar();
-    for (i = 0; i < line - 1 && c != '\n'; i++) {
+    for (i = 0; i < LINE - 1 && c != '\n'; i++) {
         c = getchar();
         s[i] = c;
     }
@@ -35,7 +35,7 @@ int getWord(char w[]) {
 
     // Read characters from the standard input until a new word is reached
     c = getchar();
-    for (i = 0; i < word - 1 && c != ' '; i++) {
+    for (i = 0; i < WORD - 1 && c != ' '; i++) {
         c = getchar();
         w[i] = c;
     }
@@ -81,43 +81,100 @@ int getWord(char w[]) {
 //    return countWords;
 //}
 
-int substring(char *str1, char *str2){
-    return strstr(str1, str2) != NULL;
+int substring(char *str1, char *str2) {
+    char *res = strstr(str1, str2);
+    if (res != NULL) {
+        return 0;
+    }
+    return 1;
 }
 
 int similar(char *s, char *t, int n) {
     // Compare the two strings up to the given number of characters
-    return strncmp(s, t, n) == 0;
+    return strncmp(s, t, n);
 }
 
-void print_lines(char *str){
+void print_lines() {
+
+    FILE *fp = fopen("find_inputa.txt", "r");
+    if (fp == NULL) {
+        printf("input file is null");
+    }
+
+    char text[INPUTSIZE][LINE];
+
+    int line = 0;
+    while (!feof(fp) && !ferror(fp)) {
+        if (fgets(text[line], LINE, fp) != NULL) {
+            line++;
+        }
+    }
+
+    // Close the file
+    fclose(fp);
+
+    //print the lines containing the specified string
+    char to_find[WORD];
+    char clause[WORD];
+    sscanf(text[0], "%[^ ];%s", to_find, clause);
+    printf("%s", clause);
+
+    if (strcmp(clause, "a")) {
+        for (int i = 1; i < line; i++) {
+            if (substring(text[i], to_find) == 0) {
+                printf("%s", text[i]);
+            }
+        }
+    }
 
 }
 
-void print_similar_words(char *str){
+void print_similar_words() {
+
+    FILE *fp = fopen("find_inputb.txt", "r");
+    if (fp == NULL) {
+        printf("input file is null");
+    }
+
+    char text[INPUTSIZE][LINE];
+
+    int line = 0;
+    while (!feof(fp) && !ferror(fp)) {
+        if (fgets(text[line], LINE, fp) != NULL) {
+            line++;
+        }
+    }
+
+    // Close the file
+    fclose(fp);
+
+    //print the lines containing the specified string
+    char to_find[WORD];
+    char clause[WORD];
+    sscanf(text[0], "%[^ ];%s", to_find, clause);
+    printf("%s", clause);
+
+    //check problems
+    char *token;
+    if (strcmp(clause, "b")) {
+        for (int i = 2; i < line; i++) {
+            token = strtok(text[i], " ");
+            while (token != NULL) {
+                if (similar(token, to_find, 1) == 0) {
+                    printf("%s", token);
+                }
+                token = strtok(NULL, " ");
+            }
+        }
+    }
 }
 
 int main() {
 
-    FILE *fp = fopen("input.txt", "r");
-    if (fp == NULL) {
-        printf("input.txt is null");
-        return 1;
-    }
+    print_lines();
+    print_similar_words();
 
-    // Read the contents of the file into a character array
-    char text[INPUTSIZE];
-    size_t n = fread(text, 1, INPUTSIZE, fp);
-    if (n == 0) {
-        printf("input.txt is empty");
-        return 1;
-    }
 
-    // Do something with the contents of the file
-    printf("%s",text);
-
-    // Close the file
-    fclose(fp);
     return 0;
 
 }
@@ -127,11 +184,11 @@ int main() {
 //    char wordArray[word];
 //    char *containAllLines[numOfLine];
 //    char option;
-    // int inWord = 0;
+// int inWord = 0;
 
-    // int index = 0;
+// int index = 0;
 
-    // Get the word to search.
+// Get the word to search.
 //    int countWords = getWord(wordArray);
 //    printf("\n");
 //    for (int i = 0; i < countWords; i++)
@@ -144,9 +201,9 @@ int main() {
 //    scanf("%lc", &info);
 //    scanf("%lc", &info);
 
-    // while (scanf("%lc", &info) == 1)
-    // {
-    //     printf("%lc", info);
-    //     // array[index] = info;
-    //     // index++;
-    // }
+// while (scanf("%lc", &info) == 1)
+// {
+//     printf("%lc", info);
+//     // array[index] = info;
+//     // index++;
+// }
