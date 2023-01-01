@@ -6,7 +6,6 @@
 #define LINE 256 // maximum length of a line
 #define WORD 30
 #define numOfLine 250
-#define INPUTSIZE 1024
 #define TRUE 1
 #define FALSE 0
 
@@ -98,10 +97,12 @@ int similar(char *s, char *t, int n)
 void print_lines(char *str)
 {
     char info;
-    char containAllLines[numOfLine] = {0};
+    char containAllLines[LINE] = {0};
+    int index = 0;
 
-    while (scanf("%c", &info) == 1)
+    while (scanf("%c", &info) == 1 && index < numOfLine)
     {
+        index++;
         containAllLines[0] = info;
         getLine(containAllLines + 1);
 
