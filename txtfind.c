@@ -51,23 +51,6 @@ int getWord(char w[])
     return i;
 }
 
-// int getWord(char w[])
-//{
-//     int info;
-//     int countWords = 0;
-//
-//     while (scanf("%lc", &info) == 1)
-//     {
-//         if (info == '\n' || info == '\r' || info == ' ' || info == '\t')
-//         {
-//             return countWords;
-//         }
-//         w[countWords] = info;
-//         countWords++;
-//     }
-//     return countWords;
-// }
-
 int substring(char *str1, char *str2)
 {
     char *res = strstr(str1, str2);
@@ -80,10 +63,7 @@ int substring(char *str1, char *str2)
 
 int similar(char *s, char *t, int n)
 {
-    // printf("*s: %s,  t: %s  ", s, t);
     int omitted = 0;
-    int indexS = 0;
-    int indexT = 0;
     // Iterate through both strings
     while (*s && *t)
     {
@@ -117,17 +97,14 @@ int similar(char *s, char *t, int n)
 
 void print_lines(char *str)
 {
+    char info;
     char containAllLines[numOfLine] = {0};
 
-    for (int i = 0; i < 5; i++)
+    while (scanf("%c", &info) == 1)
     {
-        int countLine = getLine(containAllLines);
+        containAllLines[0] = info;
+        getLine(containAllLines + 1);
 
-        // printf("%c    %d\n", containAllLines[0], countLine);
-        // if (containAllLines[0] == "\0" || containAllLines[0] == " " || containAllLines[0] == "\n" || containAllLines[0] == "\t")
-        // {
-        //     printf("\nhello");
-        // }
         if (substring(containAllLines, str) == TRUE)
         {
             printf("%s\n", containAllLines);
@@ -139,13 +116,12 @@ void print_similar_words(char *str)
 {
     char info;
 
-    char containAllLines[numOfLine] = {0};
     char word[WORD];
 
     while (scanf("%c", &info) == 1)
     {
         word[0] = info;
-        int lines = getWord(word + 1);
+        getWord(word + 1);
         if (similar(word, str, 1) == 1)
         {
             printf("%s\n", word);
@@ -157,14 +133,10 @@ int main()
 {
     int info;
     char wordArray[WORD];
-    char containAllLines[numOfLine];
     char option;
-    int inWord = 0;
-
-    int index = 0;
 
     // Get the word to search.
-    int countWords = getWord(wordArray);
+    getWord(wordArray);
 
     // Get the option.
     scanf("%c", &option);
@@ -172,8 +144,6 @@ int main()
     scanf("%lc", &info);
     scanf("%lc", &info);
 
-    // getLine(containAllLines);
-    index++;
     if (option == 'a')
     {
         print_lines(wordArray);
